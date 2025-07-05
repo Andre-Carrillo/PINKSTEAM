@@ -32,8 +32,8 @@ const RegisterForm = () => {
 
         try {
             console.log('Intentando registrar usuario:', { name, email, password });
-            //await axios.post('https://pinksteam-production.up.railway.app/api/auth/register', { name, email, password });
-            await axios.post("http://localhost:5000/api/auth/register", { name, email, password });
+            await axios.post('https://pinksteam-production.up.railway.app/api/auth/register', { name, email, password });
+            //await axios.post("http://localhost:5000/api/auth/register", { name, email, password });
             console.log('Registro exitoso!');
             alert('Usuario registrado con éxito. Ahora inicia sesión.');
             navigate('/login');

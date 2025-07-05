@@ -1,6 +1,7 @@
 import React, { useState, useContext, useEffect } from 'react';
 import { AuthContext } from '../contexts/AuthContext';
 import { Navigate } from 'react-router-dom';
+import '../styles/AdminGamesPage.css';
 
 const AdminGamesPage = () => {
     const { isLoggedIn, isAdmin } = useContext(AuthContext);
@@ -28,7 +29,7 @@ const AdminGamesPage = () => {
 
     const fetchGames = async () => {
         try {
-            const response = await fetch('http://localhost:5000/api/admin/games');
+            const response = await fetch('hhttps://pinksteam-production.up.railway.app/api/admin/games');
             if (response.ok) {
                 const data = await response.json();
                 setGames(data);
@@ -56,7 +57,7 @@ const AdminGamesPage = () => {
                 developer: formData.developer
             };
 
-            const response = await fetch('http://localhost:5000/api/admin/games', {
+            const response = await fetch('https://pinksteam-production.up.railway.app/api/admin/games', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -102,7 +103,7 @@ const AdminGamesPage = () => {
     const handleDelete = async (gameId) => {
         if (!window.confirm('¿Estás seguro de que deseas eliminar este juego?')) return;
         try {
-            const response = await fetch(`http://localhost:5000/api/admin/games/${gameId}`, {
+            const response = await fetch(`https://pinksteam-production.up.railway.app/api/admin/games/${gameId}`, {
                 method: 'DELETE',
             });
             if (response.ok) {
@@ -153,7 +154,7 @@ const AdminGamesPage = () => {
                 release_year: formData.release_year,
                 developer: formData.developer
             };
-            const response = await fetch(`http://localhost:5000/api/admin/games/${editingId}`, {
+            const response = await fetch(`https://pinksteam-production.up.railway.app/api/admin/games/${editingId}`, {
                 method: 'PUT',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(gameData)
@@ -189,221 +190,231 @@ const AdminGamesPage = () => {
     }
 
     return (
-        <div className="container mt-4">
-            <h2>Panel de Administración de Juegos</h2>
-            
-            {message && (
-                <div className={`alert ${message.includes('Error') ? 'alert-danger' : 'alert-success'}`}>
-                    {message}
-                </div>
-            )}
-
-            <div className="row">
-                <div className="col-md-6">
-                    <h3>Agregar Nuevo Juego</h3>
-                    <form onSubmit={editingId ? handleUpdate : handleSubmit}>
-                        <div className="mb-3">
-                            <label className="form-label">Título</label>
-                            <input
-                                type="text"
-                                className="form-control"
-                                name="title"
-                                value={formData.title}
-                                onChange={handleChange}
-                                required
-                            />
+        <div className="admin-games-bg">
+            <div className="admin-games-container">
+                <h2 className="admin-games-title">Panel de Administración de Juegos</h2>
+                {message && (
+                    <div className={`alert ${message.includes('Error') ? 'alert-danger' : 'alert-success'} admin-games-alert`}>
+                        {message}
+                    </div>
+                )}
+                <div className="admin-games-row">
+                    <div className="col-12 col-lg-5 mb-4 mb-lg-0 d-flex">
+                        <div className="card admin-games-form-card flex-fill">
+                            <div className="admin-games-card-body">
+                                <h3 className="admin-games-form-title">Agregar / Editar Juego</h3>
+                                <form onSubmit={editingId ? handleUpdate : handleSubmit}>
+                                    <div className="row">
+                                        <div className="col-12 col-md-6">
+                                            {/* Título, Tipo, Rating, Precio, Popularidad */}
+                                            <div className="mb-3">
+                                                <label className="form-label">Título</label>
+                                                <input
+                                                    type="text"
+                                                    className="form-control"
+                                                    name="title"
+                                                    value={formData.title}
+                                                    onChange={handleChange}
+                                                    required
+                                                />
+                                            </div>
+                                            <div className="mb-3">
+                                                <label className="form-label">Tipo</label>
+                                                <input
+                                                    type="text"
+                                                    className="form-control"
+                                                    name="type"
+                                                    value={formData.type}
+                                                    onChange={handleChange}
+                                                    placeholder="Ej: Acción, Aventura"
+                                                />
+                                            </div>
+                                            <div className="mb-3">
+                                                <label className="form-label">Rating</label>
+                                                <input
+                                                    type="number"
+                                                    className="form-control"
+                                                    name="rating"
+                                                    value={formData.rating}
+                                                    onChange={handleChange}
+                                                    min="0"
+                                                    max="10"
+                                                    step="0.1"
+                                                    placeholder="Ej: 8.5"
+                                                />
+                                            </div>
+                                            <div className="mb-3">
+                                                <label className="form-label">Precio</label>
+                                                <input
+                                                    type="number"
+                                                    className="form-control"
+                                                    name="price"
+                                                    value={formData.price}
+                                                    onChange={handleChange}
+                                                    min="0"
+                                                    step="0.01"
+                                                    placeholder="Ej: 59.99"
+                                                />
+                                            </div>
+                                            <div className="mb-3">
+                                                <label className="form-label">Popularidad</label>
+                                                <input
+                                                    type="number"
+                                                    className="form-control"
+                                                    name="popularity"
+                                                    value={formData.popularity}
+                                                    onChange={handleChange}
+                                                    min="0"
+                                                    placeholder="Ej: 1000"
+                                                />
+                                            </div>
+                                        </div>
+                                        <div className="col-12 col-md-6">
+                                            {/* Año, Fecha, Desarrollador, Imagen, Etiquetas, Plataformas */}
+                                            <div className="mb-3">
+                                                <label className="form-label">Fecha de Lanzamiento</label>
+                                                <input
+                                                    type="date"
+                                                    className="form-control"
+                                                    name="release_date"
+                                                    value={formData.release_date}
+                                                    onChange={handleChange}
+                                                    required
+                                                />
+                                            </div>
+                                            <div className="mb-3">
+                                                <label className="form-label">Desarrollador</label>
+                                                <input
+                                                    type="text"
+                                                    className="form-control"
+                                                    name="developer"
+                                                    value={formData.developer}
+                                                    onChange={handleChange}
+                                                    placeholder="Ej: Nintendo, FromSoftware"
+                                                />
+                                            </div>
+                                            <div className="mb-3">
+                                                <label className="form-label">URL o Nombre de la Imagen</label>
+                                                {/* Vista previa de la imagen si es una URL válida */}
+                                                {formData.image && (formData.image.startsWith('http://') || formData.image.startsWith('https://')) && (
+                                                    <div style={{ marginBottom: '1rem' }}>
+                                                        <img src={formData.image} alt="Vista previa" style={{ maxWidth: '100%', maxHeight: '200px', borderRadius: '8px', border: '1px solid #ccc' }} />
+                                                    </div>
+                                                )}
+                                                {/* Vista previa si es un nombre de archivo local */}
+                                                {formData.image && !(formData.image.startsWith('http://') || formData.image.startsWith('https://')) && (
+                                                    <div style={{ marginBottom: '1rem' }}>
+                                                        <img src={`${process.env.PUBLIC_URL}/games/${formData.image}`} alt="Vista previa" style={{ maxWidth: '100%', maxHeight: '200px', borderRadius: '8px', border: '1px solid #ccc' }} />
+                                                    </div>
+                                                )}
+                                                <input
+                                                    type="text"
+                                                    className="form-control"
+                                                    name="image"
+                                                    value={formData.image}
+                                                    onChange={handleChange}
+                                                    required
+                                                    placeholder="URL completa o nombre de archivo (ej: apex.jpg)"
+                                                />
+                                            </div>
+                                            <div className="mb-3">
+                                                <label className="form-label">Etiquetas (separadas por comas)</label>
+                                                <input
+                                                    type="text"
+                                                    className="form-control"
+                                                    name="tags"
+                                                    value={formData.tags}
+                                                    onChange={handleChange}
+                                                    placeholder="RPG, Acción, Aventura"
+                                                />
+                                            </div>
+                                            <div className="mb-3">
+                                                <label className="form-label">Plataformas (separadas por comas)</label>
+                                                <input
+                                                    type="text"
+                                                    className="form-control"
+                                                    name="platforms"
+                                                    value={formData.platforms}
+                                                    onChange={handleChange}
+                                                    placeholder="PC, PS5, Xbox Series X"
+                                                />
+                                            </div>
+                                            <div className="mb-3">
+                                                <label className="form-label">Año de Lanzamiento</label>
+                                                <input
+                                                    type="number"
+                                                    className="form-control"
+                                                    name="release_year"
+                                                    value={formData.release_year}
+                                                    onChange={handleChange}
+                                                    min="1970"
+                                                    max="2100"
+                                                    placeholder="Ej: 2023"
+                                                />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div className="d-flex justify-content-end mt-4">
+                                        <button type="submit" className="btn admin-games-btn-pink px-4" style={{ fontSize: 18 }}>
+                                            {editingId ? 'Guardar Cambios' : 'Agregar Juego'}
+                                        </button>
+                                        {editingId && (
+                                            <button type="button" className="btn btn-secondary ms-2 px-4 admin-games-btn-cancel" onClick={() => { setEditingId(null); setFormData({ title: '', description: '', release_date: '', image: '', tags: '', platforms: '', type: '', rating: '', price: '', popularity: '', release_year: '', developer: '' }); }}>
+                                                Cancelar
+                                            </button>
+                                        )}
+                                    </div>
+                                </form>
+                            </div>
                         </div>
-                        <div className="mb-3">
-                            <label className="form-label">Descripción</label>
-                            <textarea
-                                className="form-control"
-                                name="description"
-                                value={formData.description}
-                                onChange={handleChange}
-                                required
-                            />
-                        </div>
-                        <div className="mb-3">
-                            <label className="form-label">Fecha de Lanzamiento</label>
-                            <input
-                                type="date"
-                                className="form-control"
-                                name="release_date"
-                                value={formData.release_date}
-                                onChange={handleChange}
-                                required
-                            />
-                        </div>
-                        <div className="mb-3">
-                            <label className="form-label">URL o Nombre de la Imagen</label>
-                            {/* Vista previa de la imagen si es una URL válida */}
-                            {formData.image && (formData.image.startsWith('http://') || formData.image.startsWith('https://')) && (
-                                <div style={{ marginBottom: '1rem' }}>
-                                    <img src={formData.image} alt="Vista previa" style={{ maxWidth: '100%', maxHeight: '200px', borderRadius: '8px', border: '1px solid #ccc' }} />
+                    </div>
+                    <div className="col-12 col-lg-7 d-flex">
+                        <div className="card admin-games-list-card flex-fill">
+                            <div className="admin-games-card-body">
+                                <h3 className="admin-games-list-title">Lista de Juegos</h3>
+                                <div className="table-responsive">
+                                    <table className="table align-middle table-hover admin-games-table">
+                                        <thead className="table-light">
+                                            <tr>
+                                                <th>Imagen</th>
+                                                <th>Título</th>
+                                                <th>Precio</th>
+                                                <th>Rating</th>
+                                                <th>Acciones</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {games.map(game => {
+                                                let imgSrc = '';
+                                                if (game.thumbnail_image && (game.thumbnail_image.startsWith('http://') || game.thumbnail_image.startsWith('https://'))) {
+                                                    imgSrc = game.thumbnail_image;
+                                                } else if (game.thumbnail_image) {
+                                                    imgSrc = `${process.env.PUBLIC_URL}/games/${game.thumbnail_image}.jpg`;
+                                                } else if (game.image && (game.image.startsWith('http://') || game.image.startsWith('https://'))) {
+                                                    imgSrc = game.image;
+                                                } else if (game.image) {
+                                                    imgSrc = `${process.env.PUBLIC_URL}/games/${game.image}.jpg`;
+                                                }
+                                                return (
+                                                    <tr key={game.id || game.game_id}>
+                                                        <td>
+                                                            {imgSrc && <img src={imgSrc} alt={game.title || game.name} className="admin-games-img" />}
+                                                        </td>
+                                                        <td style={{ fontWeight: 600 }}>{game.title || game.name}</td>
+                                                        <td>{game.price ? `$${parseFloat(game.price).toFixed(2)}` : '-'}</td>
+                                                        <td>{game.rating || '-'}</td>
+                                                        <td>
+                                                            <button className="btn btn-sm admin-games-btn-pink me-2" onClick={() => handleEdit(game)}>Editar</button>
+                                                            <button className="btn btn-sm btn-danger admin-games-btn-cancel" onClick={() => handleDelete(game.game_id || game.id)}>Eliminar</button>
+                                                        </td>
+                                                    </tr>
+                                                );
+                                            })}
+                                        </tbody>
+                                    </table>
                                 </div>
-                            )}
-                            {/* Vista previa si es un nombre de archivo local */}
-                            {formData.image && !(formData.image.startsWith('http://') || formData.image.startsWith('https://')) && (
-                                <div style={{ marginBottom: '1rem' }}>
-                                    <img src={`${process.env.PUBLIC_URL}/games/${formData.image}`} alt="Vista previa" style={{ maxWidth: '100%', maxHeight: '200px', borderRadius: '8px', border: '1px solid #ccc' }} />
-                                </div>
-                            )}
-                            <input
-                                type="text"
-                                className="form-control"
-                                name="image"
-                                value={formData.image}
-                                onChange={handleChange}
-                                required
-                                placeholder="URL completa o nombre de archivo (ej: apex.jpg)"
-                            />
+                            </div>
                         </div>
-                        <div className="mb-3">
-                            <label className="form-label">Etiquetas (separadas por comas)</label>
-                            <input
-                                type="text"
-                                className="form-control"
-                                name="tags"
-                                value={formData.tags}
-                                onChange={handleChange}
-                                placeholder="RPG, Acción, Aventura"
-                            />
-                        </div>
-                        <div className="mb-3">
-                            <label className="form-label">Plataformas (separadas por comas)</label>
-                            <input
-                                type="text"
-                                className="form-control"
-                                name="platforms"
-                                value={formData.platforms}
-                                onChange={handleChange}
-                                placeholder="PC, PS5, Xbox Series X"
-                            />
-                        </div>
-                        <div className="mb-3">
-                            <label className="form-label">Tipo</label>
-                            <input
-                                type="text"
-                                className="form-control"
-                                name="type"
-                                value={formData.type}
-                                onChange={handleChange}
-                                placeholder="Ej: Acción, Aventura"
-                            />
-                        </div>
-                        <div className="mb-3">
-                            <label className="form-label">Rating</label>
-                            <input
-                                type="number"
-                                className="form-control"
-                                name="rating"
-                                value={formData.rating}
-                                onChange={handleChange}
-                                min="0"
-                                max="10"
-                                step="0.1"
-                                placeholder="Ej: 8.5"
-                            />
-                        </div>
-                        <div className="mb-3">
-                            <label className="form-label">Precio</label>
-                            <input
-                                type="number"
-                                className="form-control"
-                                name="price"
-                                value={formData.price}
-                                onChange={handleChange}
-                                min="0"
-                                step="0.01"
-                                placeholder="Ej: 59.99"
-                            />
-                        </div>
-                        <div className="mb-3">
-                            <label className="form-label">Popularidad</label>
-                            <input
-                                type="number"
-                                className="form-control"
-                                name="popularity"
-                                value={formData.popularity}
-                                onChange={handleChange}
-                                min="0"
-                                placeholder="Ej: 1000"
-                            />
-                        </div>
-                        <div className="mb-3">
-                            <label className="form-label">Año de Lanzamiento</label>
-                            <input
-                                type="number"
-                                className="form-control"
-                                name="release_year"
-                                value={formData.release_year}
-                                onChange={handleChange}
-                                min="1970"
-                                max="2100"
-                                placeholder="Ej: 2023"
-                            />
-                        </div>
-                        <div className="mb-3">
-                            <label className="form-label">Desarrollador</label>
-                            <input
-                                type="text"
-                                className="form-control"
-                                name="developer"
-                                value={formData.developer}
-                                onChange={handleChange}
-                                placeholder="Ej: Nintendo, FromSoftware"
-                            />
-                        </div>
-                        <button type="submit" className="btn btn-primary">
-                            {editingId ? 'Guardar Cambios' : 'Agregar Juego'}
-                        </button>
-                        {editingId && (
-                            <button type="button" className="btn btn-secondary ms-2" onClick={() => { setEditingId(null); setFormData({ title: '', description: '', release_date: '', image: '', tags: '', platforms: '', type: '', rating: '', price: '', popularity: '', release_year: '', developer: '' }); }}>Cancelar</button>
-                        )}
-                    </form>
-                </div>
-
-                <div className="col-md-6">
-                    <h3>Lista de Juegos</h3>
-                    <div className="table-responsive">
-                        <table className="table table-striped">
-                            <thead>
-                                <tr>
-                                    <th>Imagen</th>
-                                    <th>Título</th>
-                                    <th>Fecha de Lanzamiento</th>
-                                    <th>Acciones</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {games.map(game => {
-                                    // Lógica de imagen igual que en GameDetailPage
-                                    let imgSrc = '';
-                                    if (game.thumbnail_image && (game.thumbnail_image.startsWith('http://') || game.thumbnail_image.startsWith('https://'))) {
-                                        imgSrc = game.thumbnail_image;
-                                    } else if (game.thumbnail_image) {
-                                        imgSrc = `${process.env.PUBLIC_URL}/games/${game.thumbnail_image}.jpg`;
-                                    } else if (game.image && (game.image.startsWith('http://') || game.image.startsWith('https://'))) {
-                                        imgSrc = game.image;
-                                    } else if (game.image) {
-                                        imgSrc = `${process.env.PUBLIC_URL}/games/${game.image}.jpg`;
-                                    }
-                                    return (
-                                        <tr key={game.id || game.game_id}>
-                                            <td>
-                                                {imgSrc && <img src={imgSrc} alt={game.title || game.name} style={{ width: 60, height: 60, objectFit: 'cover', borderRadius: 8, border: '1px solid #ccc' }} />}
-                                            </td>
-                                            <td>{game.title || game.name}</td>
-                                            <td>{game.release_date ? new Date(game.release_date).toLocaleDateString() : ''}</td>
-                                            <td>
-                                                <button className="btn btn-sm btn-info me-2" onClick={() => handleEdit(game)}>Editar</button>
-                                                <button className="btn btn-sm btn-danger" onClick={() => handleDelete(game.game_id || game.id)}>Eliminar</button>
-                                            </td>
-                                        </tr>
-                                    );
-                                })}
-                            </tbody>
-                        </table>
                     </div>
                 </div>
             </div>

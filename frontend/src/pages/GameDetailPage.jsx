@@ -21,8 +21,8 @@ export const GameDetailPage = () => {
         const fetchAllGames = async () => {
             try {
                 console.log('fetchAllGames: calling API');
-                //const res = await axios.get('https://pinksteam-production.up.railway.app/api/auth/games');
-                const res = await axios.get("http://localhost:5000/api/auth/games");
+                const res = await axios.get('https://pinksteam-production.up.railway.app/api/auth/games');
+                //const res = await axios.get("http://localhost:5000/api/auth/games");
                 console.log('fetchAllGames response', res.data);
                 const mappedGames = res.data.map(game => ({
                     id: game.game_id,

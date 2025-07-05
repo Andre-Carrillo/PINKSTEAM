@@ -18,8 +18,8 @@ const GamesPage = () => {
   useEffect(() => {
     const fetchGames = async () => {
       try {
-        //const response = await axios.get('https://pinksteam-production.up.railway.app/api/auth/games');
-        const response = await axios.get("http://localhost:5000/api/auth/games");
+        const response = await axios.get('https://pinksteam-production.up.railway.app/api/auth/games');
+        //const response = await axios.get("http://localhost:5000/api/auth/games");
         setGames(response.data);
       } catch (error) {
         console.error('Error fetching games:', error);

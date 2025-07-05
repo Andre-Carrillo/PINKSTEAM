@@ -1,0 +1,117 @@
+/* Fondo general y container principal */
+.admin-games-bg {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #f8e1ec 0%, #f3f7fa 100%);
+  padding: 40px 0;
+}
+
+.admin-games-container {
+  max-width: 1300px;
+  margin: 0 auto;
+}
+
+.admin-games-title {
+  font-weight: 800;
+  color: #e75480;
+  letter-spacing: 2px;
+  font-size: 38px;
+  text-shadow: 0 2px 8px #e7548033;
+  margin-bottom: 2.5rem;
+  text-align: center;
+}
+
+.admin-games-alert {
+  font-weight: 500;
+  border-radius: 12px;
+  font-size: 18px;
+  text-align: center;
+}
+
+.admin-games-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2.5rem;
+  align-items: stretch;
+  justify-content: center;
+  flex-direction: row-reverse;
+}
+
+.admin-games-form-card, .admin-games-list-card {
+  border-radius: 24px;
+  box-shadow: 0 4px 24px #e7548033;
+  border: none;
+  min-height: 600px;
+  display: flex;
+  flex-direction: column;
+  background: #fff9fc;
+}
+
+.admin-games-list-card {
+  background: #f7fafd;
+}
+
+.admin-games-card-body {
+  padding: 2rem;
+  flex: 1 1 auto;
+}
+
+.admin-games-form-title, .admin-games-list-title {
+  color: #e75480;
+  font-weight: 700;
+  font-size: 26px;
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+.admin-games-table {
+  border-radius: 16px;
+  overflow: hidden;
+  background: #fff;
+}
+
+.admin-games-table th, .admin-games-table td {
+  font-size: 17px;
+  vertical-align: middle;
+}
+
+.admin-games-table th {
+  font-size: 18px;
+}
+
+.admin-games-img {
+  width: 60px;
+  height: 60px;
+  object-fit: cover;
+  border-radius: 12px;
+  border: 1px solid #e75480;
+  box-shadow: 0 2px 8px #e7548033;
+}
+
+.admin-games-btn-pink {
+  background: #e75480;
+  border: none;
+  color: #fff;
+  font-weight: 700;
+  border-radius: 8px;
+}
+
+.admin-games-btn-pink:hover, .admin-games-btn-pink:focus {
+  background: #c13c6a;
+  color: #fff;
+}
+
+.admin-games-btn-cancel {
+  font-weight: 700;
+  font-size: 18px;
+  border-radius: 8px;
+}
+
+@media (max-width: 991px) {
+  .admin-games-row {
+    flex-direction: column;
+    gap: 2rem;
+  }
+  .admin-games-form-card, .admin-games-list-card {
+    min-height: unset;
+  }
+}
