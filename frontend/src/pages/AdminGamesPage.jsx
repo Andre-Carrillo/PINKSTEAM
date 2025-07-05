@@ -29,7 +29,7 @@ const AdminGamesPage = () => {
 
     const fetchGames = async () => {
         try {
-            const response = await fetch('hhttps://pinksteam-production.up.railway.app/api/admin/games');
+            const response = await fetch('https://pinksteam-production.up.railway.app/api/admin/games');
             if (response.ok) {
                 const data = await response.json();
                 setGames(data);
