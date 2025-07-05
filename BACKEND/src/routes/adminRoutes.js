@@ -14,15 +14,16 @@ router.get('/games', async (req, res) => {
 
 // Agregar un nuevo juego
 router.post('/games', async (req, res) => {
-    const { title, description, release_date, image, tags, platforms } = req.body;
+    const { title, description, release_date, image, type, rating, price, popularity, release_year, developer } = req.body;
     // Validación básica
     if (!title || !description || !release_date || !image) {
         return res.status(400).json({ error: 'Faltan campos obligatorios' });
     }
     try {
         const result = await pool.query(
-            'INSERT INTO games (name, description, release_date, thumbnail_image) VALUES ($1, $2, $3, $4) RETURNING *',
-            [title, description, release_date, image]
+            `INSERT INTO games (name, description, release_date, thumbnail_image, type, rating, price, popularity, release_year, developer)
+             VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10) RETURNING *`,
+            [title, description, release_date, image, type, rating, price, popularity, release_year, developer]
         );
         res.status(201).json(result.rows[0]);
     } catch (err) {
@@ -69,11 +70,11 @@ router.delete('/games/:id', async (req, res) => {
 // Editar un juego por id
 router.put('/games/:id', async (req, res) => {
     const { id } = req.params;
-    const { title, description, release_date, image } = req.body;
+    const { title, description, release_date, image, type, rating, price, popularity, release_year, developer } = req.body;
     try {
         const result = await pool.query(
-            'UPDATE games SET name = $1, description = $2, release_date = $3, thumbnail_image = $4 WHERE game_id = $5 RETURNING *',
-            [title, description, release_date, image, id]
+            `UPDATE games SET name = $1, description = $2, release_date = $3, thumbnail_image = $4, type = $5, rating = $6, price = $7, popularity = $8, release_year = $9, developer = $10 WHERE game_id = $11 RETURNING *`,
+            [title, description, release_date, image, type, rating, price, popularity, release_year, developer, id]
         );
         if (result.rows.length === 0) {
             return res.status(404).json({ error: 'Juego no encontrado' });

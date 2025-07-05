@@ -219,6 +219,18 @@ const AdminGamesPage = () => {
                                                 />
                                             </div>
                                             <div className="mb-3">
+                                                <label className="form-label">Descripción</label>
+                                                <textarea
+                                                    className="form-control"
+                                                    name="description"
+                                                    value={formData.description}
+                                                    onChange={handleChange}
+                                                    required
+                                                    rows={4}
+                                                    placeholder="Descripción del juego"
+                                                />
+                                            </div>
+                                            <div className="mb-3">
                                                 <label className="form-label">Tipo</label>
                                                 <input
                                                     type="text"
