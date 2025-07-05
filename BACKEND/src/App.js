@@ -14,6 +14,7 @@ const cors = require('cors');
 const { testDbConnection } = require('./config/db');
 // Importa tus archivos de rutas. Los crearemos en el siguiente paso.
 const authRoutes = require('./routes/authRoutes');
+const adminRoutes = require('./routes/adminRoutes');
 //const userRoutes = require('./routes/userRoutes'); // Si tienes rutas para la gestión de usuarios
 
 // Crea una instancia de la aplicación Express.
@@ -33,6 +34,7 @@ app.use(express.json());
 // Define los prefijos de las rutas y asocia los routers correspondientes.
 // Todas las rutas definidas en authRoutes.js serán prefijadas con /api/auth.
 app.use('/api/auth', authRoutes);
+app.use('/api/admin', adminRoutes);
 // Todas las rutas definidas en userRoutes.js serán prefijadas con /api/users.
 //app.use('/api/users', userRoutes); // Ejemplo de rutas para usuarios
 

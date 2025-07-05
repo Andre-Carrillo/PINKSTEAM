@@ -28,23 +28,22 @@ export const AuthProvider = ({ children }) => {
     }, [isLoggedIn, user]);
 
     // Función para iniciar sesión
-    const login = (userData = { username: 'Usuario' }) => { // Puedes pasar más datos del usuario real aquí
+    const login = (userData) => {
         setIsLoggedIn(true);
         setUser(userData);
-        // alert('Usuario ha iniciado sesión'); // Puedes quitar esta alerta
     };
 
     // Función para cerrar sesión
     const logout = () => {
         setIsLoggedIn(false);
         setUser(null);
-        // alert('Usuario ha cerrado sesión'); // Puedes quitar esta alerta
     };
 
     // El valor que se proporcionará a los componentes que consuman este contexto
     const authContextValue = {
         isLoggedIn,
-        user, // Puedes acceder a los datos del usuario logueado
+        user,
+        isAdmin: user?.name === 'admin', // Solo el usuario con nombre 'admin' es admin
         login,
         logout,
     };

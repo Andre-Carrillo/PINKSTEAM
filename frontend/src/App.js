@@ -14,6 +14,7 @@ import RegisterPage from "./pages/RegisterPage";
 import GamesPage from "./pages/GamesPage";
 import LibraryPage from "./pages/LibraryPage";
 import GameDetailPage from "./pages/GameDetailPage";
+import AdminGamesPage from "./pages/AdminGamesPage";
 
 function App() {
   return (
@@ -29,6 +30,7 @@ function App() {
           <Route path="/games" element={<GamesPage />} />
           <Route path="/library" element={<LibraryPage />} />
           <Route path="/game/:id" element={<GameDetailPage />} />
+          <Route path="/admin/games" element={<AdminGamesPage />} />
         </Routes>
       </GameProvider>
     </AuthProvider>

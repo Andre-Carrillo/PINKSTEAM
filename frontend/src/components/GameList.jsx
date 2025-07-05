@@ -19,7 +19,10 @@ function GameList({ games }) {
         console.log('GameList item:', game);
         if (game && (game.title || game.name)) {
           const title = game.title || game.name;
-          const image = game.image || `${process.env.PUBLIC_URL}/games/${game.thumbnail_image}.jpg`;
+          const image = game.thumbnail_image && (game.thumbnail_image.startsWith('http://') || game.thumbnail_image.startsWith('https://'))
+                ? game.thumbnail_image
+                : (game.thumbnail_image ? `${process.env.PUBLIC_URL}/games/${game.thumbnail_image}.jpg` : '');
+
           return (
             <div key={game.id || game.game_id || index} className="game-list-item">
               <img

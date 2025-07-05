@@ -17,7 +17,8 @@ const Home = () => {
   useEffect(() => {
     const fetchGames = async () => {
       try {
-        const res = await axios.get('https://pinksteam-production.up.railway.app/api/auth/games');
+        //const res = await axios.get('https://pinksteam-production.up.railway.app/api/auth/games');
+        const res = await axios.get("http://localhost:5000/api/auth/games");
         // Map backend fields to frontend expected fields
         const mappedGames = res.data.map(game => ({
           id: game.game_id,
@@ -50,6 +51,9 @@ const Home = () => {
           {isLoggedIn ? (
             <>
               <button className="btn library" onClick={() => navigate("/library")}>MI BIBLIOTECA</button>
+              {user && user.name === 'admin' && (
+                <button className="btn admin" onClick={() => navigate("/admin/games")}>ADMIN</button>
+              )}
               <span className="welcome-message">Hola, {user ? user.name : 'Usuario'}</span>
               <button className="btn logout" onClick={logout}>Cerrar Sesión</button>
             </>

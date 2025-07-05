@@ -22,7 +22,8 @@ export const GameProvider = ({ children }) => {
       }
       setLoading(true);
       try {
-        const res = await axios.get(`https://pinksteam-production.up.railway.app/api/auth/games/user/${user.id || user.user_id}`);
+        const res = await axios.get("http://localhost:5000/api/auth/games/user/" + (user.id || user.user_id));
+        //const res = await axios.get(`https://pinksteam-production.up.railway.app/api/auth/games/user/${user.id || user.user_id}`);
         // Mapear los campos para que sean consistentes
         const mapped = res.data.map(game => ({
           id: game.game_id,

@@ -21,12 +21,15 @@ export const GameDetailPage = () => {
         const fetchAllGames = async () => {
             try {
                 console.log('fetchAllGames: calling API');
-                const res = await axios.get('https://pinksteam-production.up.railway.app/api/auth/games');
+                //const res = await axios.get('https://pinksteam-production.up.railway.app/api/auth/games');
+                const res = await axios.get("http://localhost:5000/api/auth/games");
                 console.log('fetchAllGames response', res.data);
                 const mappedGames = res.data.map(game => ({
                     id: game.game_id,
                     title: game.name,
-                    image: game.thumbnail_image ? `${process.env.PUBLIC_URL}/games/${game.thumbnail_image}.jpg` : '',
+                    image: game.thumbnail_image && (game.thumbnail_image.startsWith('http://') || game.thumbnail_image.startsWith('https://'))
+                        ? game.thumbnail_image
+                        : (game.thumbnail_image ? `${process.env.PUBLIC_URL}/games/${game.thumbnail_image}.jpg` : ''),
                     tags: game.tags ? (Array.isArray(game.tags) ? game.tags : (typeof game.tags === 'string' ? game.tags.split(',').map(t => t.trim()) : []) ) : [],
                     ...game
                 }));
