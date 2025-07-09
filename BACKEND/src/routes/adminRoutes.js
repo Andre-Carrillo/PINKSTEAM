@@ -2,6 +2,13 @@ const express = require('express');
 const router = express.Router();
 const { pool } = require('../config/db');
 
+// Utilidad para convertir string vacío a null y parsear números
+function parseOrNull(val, type = 'number') {
+    if (val === undefined || val === null || val === '') return null;
+    if (type === 'number') return isNaN(Number(val)) ? null : Number(val);
+    return val;
+}
+
 // Obtener todos los juegos (igual que en gameRoutes, pero para admin)
 router.get('/games', async (req, res) => {
     try {
@@ -28,11 +35,16 @@ router.get('/games/:id', async (req, res) => {
 
 // Agregar un nuevo juego
 router.post('/games', async (req, res) => {
-    const { title, description, release_date, image, type, rating, price, popularity, release_year, developer } = req.body;
+    let { title, description, release_date, image, type, rating, price, popularity, release_year, developer } = req.body;
     // Validación básica
     if (!title || !description || !release_date || !image) {
         return res.status(400).json({ error: 'Faltan campos obligatorios' });
     }
+    // Parsear campos numéricos
+    rating = parseOrNull(rating);
+    price = parseOrNull(price);
+    popularity = parseOrNull(popularity);
+    release_year = parseOrNull(release_year);
     try {
         const result = await pool.query(
             `INSERT INTO games (name, description, release_date, thumbnail_image, type, rating, price, popularity, release_year, developer)
@@ -84,7 +96,12 @@ router.delete('/games/:id', async (req, res) => {
 // Editar un juego por id
 router.put('/games/:id', async (req, res) => {
     const { id } = req.params;
-    const { title, description, release_date, image, type, rating, price, popularity, release_year, developer } = req.body;
+    let { title, description, release_date, image, type, rating, price, popularity, release_year, developer } = req.body;
+    // Parsear campos numéricos
+    rating = parseOrNull(rating);
+    price = parseOrNull(price);
+    popularity = parseOrNull(popularity);
+    release_year = parseOrNull(release_year);
     try {
         const result = await pool.query(
             `UPDATE games SET name = $1, description = $2, release_date = $3, thumbnail_image = $4, type = $5, rating = $6, price = $7, popularity = $8, release_year = $9, developer = $10 WHERE game_id = $11 RETURNING *`,
