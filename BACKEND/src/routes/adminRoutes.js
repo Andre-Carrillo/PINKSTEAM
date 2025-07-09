@@ -12,6 +12,20 @@ router.get('/games', async (req, res) => {
     }
 });
 
+// Obtener un juego por id
+router.get('/games/:id', async (req, res) => {
+    const { id } = req.params;
+    try {
+        const result = await pool.query('SELECT * FROM games WHERE game_id = $1', [id]);
+        if (result.rows.length === 0) {
+            return res.status(404).json({ error: 'Juego no encontrado' });
+        }
+        res.json(result.rows[0]);
+    } catch (err) {
+        res.status(500).json({ error: 'Error al obtener el juego', details: err.message });
+    }
+});
+
 // Agregar un nuevo juego
 router.post('/games', async (req, res) => {
     const { title, description, release_date, image, type, rating, price, popularity, release_year, developer } = req.body;
